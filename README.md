@@ -1,2 +1,2 @@
-# snakegame
-Snake game
+# Snake Game
+My first game.
