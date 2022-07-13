@@ -9,14 +9,14 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public struct PlayerController
+    public enum Direction
     {
-        public string up;
-        public string down;
-        public string right;
-        public string left;
+        Up,
+        Down,
+        Right,
+        Left
     }
-
+    
     public GameOverMenu gameOverMenu;
     public FruitManager fruitManager;
     public TileCreater tileCreater;
@@ -27,13 +27,12 @@ public class Player : MonoBehaviour
     public float speed;
     public float time;
     public float timeDelay;
-    string moveDir;
+    private Direction moveDir;
     private int j;
     private int a;
     private int i;
     private int tailSize;
 
-    PlayerController playerController;
     [SerializeField] public int playerIndex;
 
     public List<GameObject> tails;
@@ -46,12 +45,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        //setting up controls
-        playerController.up = "up";
-        playerController.down = "down";
-        playerController.right = "right";
-        playerController.left = "left";
-        
         tails = new List<GameObject>();
         tempPos = new List<Vector3>();
         tempRot = new List<Quaternion>();
@@ -84,57 +77,60 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
-                moveDir = playerController.up;
+                moveDir = Direction.Up;
             }
             else if (Input.GetKeyDown(KeyCode.S))
             {
-                moveDir = playerController.down;
+                moveDir = Direction.Down;
             }
             else if (Input.GetKeyDown(KeyCode.D))
             {
-                moveDir = playerController.right;
+                moveDir = Direction.Right;
             }
             else if (Input.GetKeyDown(KeyCode.A))
             {
-                moveDir = playerController.left;
+                moveDir = Direction.Left;
             }
-        }else if (playerIndex == 2)
+        }
+        else if (playerIndex == 2)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                moveDir = playerController.up;
+                moveDir = Direction.Up;
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                moveDir = playerController.down;
+                moveDir = Direction.Down;
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                moveDir = playerController.right;
+                moveDir = Direction.Right;
             }
             else if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                moveDir = playerController.left;
+                moveDir = Direction.Left;
             }
         }
 
         //Rotate
         switch (moveDir)
         {
-            case "up":
+            case Direction.Up:
                     MoveRotation(0, direction);
                 break;
-            case "down":
+            case Direction.Down:
                     MoveRotation(180, direction);
                 break;
-            case "right":
+            case Direction.Right:
                     MoveRotation(90, direction);
                 break;
-            case "left":
+            case Direction.Left:
                     MoveRotation(-90, direction);
                 break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
-
+        
         time += speed * Time.deltaTime;
         //Movement
         if (time >= timeDelay)
