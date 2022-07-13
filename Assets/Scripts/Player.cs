@@ -9,11 +9,20 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    public struct PlayerController
+    {
+        public string up;
+        public string down;
+        public string right;
+        public string left;
+    }
+
+    public GameOverMenu gameOverMenu;
     public FruitManager fruitManager;
     public TileCreater tileCreater;
     public SoundManager soundManager;
-    private Text speedText;
-    private Text tailText;
+    public Text speedText;
+    public Text tailText;
 
     public float speed;
     public float time;
@@ -23,6 +32,9 @@ public class Player : MonoBehaviour
     private int a;
     private int i;
     private int tailSize;
+
+    PlayerController playerController;
+    [SerializeField] public int playerIndex;
 
     public List<GameObject> tails;
     public List<Vector3> tempPos;
@@ -34,6 +46,12 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        //setting up controls
+        playerController.up = "up";
+        playerController.down = "down";
+        playerController.right = "right";
+        playerController.left = "left";
+        
         tails = new List<GameObject>();
         tempPos = new List<Vector3>();
         tempRot = new List<Quaternion>();
@@ -41,10 +59,10 @@ public class Player : MonoBehaviour
         CreateTail = new UnityEvent();
         CreateTail.AddListener(Grow);
 
-        speedText = GameObject.Find("SpeedText").GetComponent<Text>();
+        /*speedText = GameObject.Find("SpeedText").GetComponent<Text>();
         tailText = GameObject.Find("TailText").GetComponent<Text>();
         fruitManager = GameObject.Find("FruitManager").GetComponent<FruitManager>();
-        soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+        soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();*/
 
         tailSize = 0;
         i = 0;
@@ -62,36 +80,57 @@ public class Player : MonoBehaviour
     private void Update()
     {
         //ChangeMoveDirection
-        if (Input.GetKeyDown(KeyCode.W))
+        if(playerIndex == 1)
         {
-            moveDir = "W";
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                moveDir = playerController.up;
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
+                moveDir = playerController.down;
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                moveDir = playerController.right;
+            }
+            else if (Input.GetKeyDown(KeyCode.A))
+            {
+                moveDir = playerController.left;
+            }
+        }else if (playerIndex == 2)
         {
-            moveDir = "S";
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            moveDir = "D";
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            moveDir = "A";
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                moveDir = playerController.up;
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                moveDir = playerController.down;
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                moveDir = playerController.right;
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                moveDir = playerController.left;
+            }
         }
 
         //Rotate
         switch (moveDir)
         {
-            case "W":
+            case "up":
                     MoveRotation(0, direction);
                 break;
-            case "S":
+            case "down":
                     MoveRotation(180, direction);
                 break;
-            case "D":
+            case "right":
                     MoveRotation(90, direction);
                 break;
-            case "A":
+            case "left":
                     MoveRotation(-90, direction);
                 break;
         }
@@ -130,12 +169,12 @@ public class Player : MonoBehaviour
             else if ((position.z < -(tileCreater.column - 1)) &&
                      direction.transform.rotation == Quaternion.AngleAxis(180, Vector3.up)) //down
             {
-                direction.gameObject.transform.position = new Vector3(direction.transform.position.x, 1, 1);
+                direction.gameObject.transform.position = new Vector3(direction.transform.position.x, 1, 0);
             }
             else if (position.x > (tileCreater.row - 1) &&
                      direction.transform.rotation == Quaternion.AngleAxis(90, Vector3.up)) //right
             {
-                direction.gameObject.transform.position = new Vector3(0, 1, direction.transform.position.z);
+                direction.transform.position = new Vector3(0, 1, direction.transform.position.z);
             }
             else if ((position.x < 0) &&
                      direction.transform.rotation == Quaternion.AngleAxis(-90, Vector3.up)) //left
@@ -173,8 +212,6 @@ public class Player : MonoBehaviour
 
     public void Grow()
     {
-        /*GameObject thisObject = (GameObject)Instantiate(tailPrefab);
-        tails.Add(thisObject);*/ //?
         tempPos.Add(tails.Last().transform.position);
         tempRot.Add(tails.Last().transform.rotation);
         tails.Add((GameObject)Instantiate(tailPrefab, tails.Last().transform.position,
@@ -183,5 +220,12 @@ public class Player : MonoBehaviour
         speed += 0.1f;
         tailSize++;
         soundManager.PlayEatSound();
+    }
+    private void OnTriggerEnter(Collider other) 
+    {
+        if (other.CompareTag("Player")) 
+        { 
+            gameOverMenu.gameOver = true;
+        }
     }
 }

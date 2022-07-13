@@ -343,7 +343,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c4775fd46fc5742b4773e1629be4de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player_1: {fileID: 0}
+  player_2: {fileID: 0}
+  fruitCreater: {fileID: 0}
 --- !u!1 &1426921345676800
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,24 +5,33 @@ using UnityEngine;
 
 public class Fruit : MonoBehaviour
 {
-    public Player player;
+    public GameObject player_1;
+    public GameObject player_2;
     private FruitManager fruitManager;
-    private SoundManager soundManager;
+    public FruitCreater fruitCreater;
     private void Start()
     {
-        fruitManager = GameObject.Find("FruitManager").GetComponent<FruitManager>();
-        player = GameObject.Find("Player").GetComponent<Player>();
+        /*fruitManager = GameObject.Find("FruitManager").GetComponent<FruitManager>();
+        player = GameObject.Find("Player").GetComponent<Player>();*/
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other == player_1.GetComponent<BoxCollider>())
         {
-            player.CreateTail.Invoke();
-            fruitManager.ateFruit++;
+            player_1.GetComponent<Player>().CreateTail.Invoke();
+            player_1.GetComponent<Player>().fruitManager.ateFruit++;
             Destroy(gameObject);
-            fruitManager.fruitInMap = false;
-            //create tail
+            fruitCreater.fruitInMap = false;
+            
+        }
+        else if (other == player_2.GetComponent<BoxCollider>())
+        {
+            player_2.GetComponent<Player>().CreateTail.Invoke();
+            player_2.GetComponent<Player>().fruitManager.ateFruit++;
+            Destroy(gameObject);
+            fruitCreater.fruitInMap = false;
+            
         }
     }
 }
