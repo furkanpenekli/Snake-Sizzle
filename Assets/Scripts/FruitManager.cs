@@ -17,7 +17,7 @@ public class FruitManager : MonoBehaviour
     public int fruitGoalMultiplier;
     
     public SoundManager soundManager;
-    public Player player;
+    public Snake player;
     public Text fruitText;
     public Text goalText;
     public Image fruitBar;

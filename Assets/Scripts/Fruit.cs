@@ -19,16 +19,16 @@ public class Fruit : MonoBehaviour
     {
         if (other == player_1.GetComponent<BoxCollider>())
         {
-            player_1.GetComponent<Player>().CreateTail.Invoke();
-            player_1.GetComponent<Player>().fruitManager.ateFruit++;
+            player_1.GetComponent<Snake>().CreateTail.Invoke();
+            player_1.GetComponent<Snake>().fruitManager.ateFruit++;
             Destroy(gameObject);
             fruitCreater.fruitInMap = false;
             
         }
         else if (other == player_2.GetComponent<BoxCollider>())
         {
-            player_2.GetComponent<Player>().CreateTail.Invoke();
-            player_2.GetComponent<Player>().fruitManager.ateFruit++;
+            player_2.GetComponent<Snake>().CreateTail.Invoke();
+            player_2.GetComponent<Snake>().fruitManager.ateFruit++;
             Destroy(gameObject);
             fruitCreater.fruitInMap = false;
             

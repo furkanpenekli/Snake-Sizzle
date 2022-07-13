@@ -1,13 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Tail : MonoBehaviour
 {
     public GameOverMenu gameOverMenu;
-    public Player player;
+    public Snake player;
 
     private void Start()
     {
@@ -16,7 +12,7 @@ public class Tail : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
-        if (player.tails.Count > 2)
+        if (player.GetTailSize() > 2)
         {
             if (other.CompareTag("Player"))
             {

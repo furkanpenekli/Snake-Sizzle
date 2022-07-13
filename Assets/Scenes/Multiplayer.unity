@@ -2480,6 +2480,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6713c28ceeb8f10479c49f50fdf8dbd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keyMapping:
+    moveUp: 0
+    moveDown: 0
+    moveRight: 0
+    moveLeft: 0
   gameOverMenu: {fileID: 157872803}
   fruitManager: {fileID: 131811294}
   tileCreater: {fileID: 1582321073}
@@ -2489,10 +2494,7 @@ MonoBehaviour:
   speed: 0
   time: 0
   timeDelay: 0
-  playerIndex: 2
   tails: []
-  tempPos: []
-  tempRot: []
   tailPrefab: {fileID: 593303016}
   direction: {fileID: 1560382494}
   CreateTail:
@@ -3981,6 +3983,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6713c28ceeb8f10479c49f50fdf8dbd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keyMapping:
+    moveUp: 119
+    moveDown: 115
+    moveRight: 100
+    moveLeft: 97
   gameOverMenu: {fileID: 157872803}
   fruitManager: {fileID: 2020184361}
   tileCreater: {fileID: 1582321073}
@@ -3990,10 +3997,7 @@ MonoBehaviour:
   speed: 1
   time: 0
   timeDelay: 0
-  playerIndex: 1
   tails: []
-  tempPos: []
-  tempRot: []
   tailPrefab: {fileID: 1092553599}
   direction: {fileID: 999338407}
   CreateTail:
