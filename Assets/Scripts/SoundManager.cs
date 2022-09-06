@@ -14,20 +14,24 @@ public class SoundManager : MonoBehaviour
     public List<AudioClip> eatList = new List<AudioClip>();
     public List<AudioClip> levelUpList = new List<AudioClip>();
 
-    public void PlayEatSound()
+    public Snake snake;
+    private void PlayEatSound()
     {
         int r = Random.Range(0, eatList.Count);
         eatSource.clip = eatList[r];
         eatSource.Play();
     }
-    public void PlayLevelUpSound()
+    private void PlayLevelUpSound()
     {
-        int r = Random.Range(0, levelUpList.Count);
-        levelUpSource.clip = levelUpList[r];
+        int range = Random.Range(0, levelUpList.Count);
+        levelUpSource.clip = levelUpList[range];
         levelUpSource.Play();
     }
     void Update()
     {
-        
+        if (snake.isGrow == true)
+        {
+            PlayEatSound();
+        }
     }
 }

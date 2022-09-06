@@ -1,19 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FruitCreater : MonoBehaviour
 {
-    public bool fruitInMap;
-    public GameObject fruit;
-    public GameObject currentFruit;
+    [SerializeField]
+    private bool fruitInMap;
+    [SerializeField]
+    private GameObject fruit;
+    private GameObject currentFruit;
+    [SerializeField]
+    private TileCreater tileCreater;
 
-    public TileCreater tileCreater;
-    void Start()
+    private void SearchFood()
     {
-        
+        //var food = GameObject.FindObjectOfType<Food>();
+        var food = currentFruit;
+        if (food == null)
+        {
+            fruitInMap = false;    
+        }
     }
-    void Update()
+    private void CreateFruit()
     {
         if (fruitInMap == false)
         {
@@ -21,5 +31,10 @@ public class FruitCreater : MonoBehaviour
             currentFruit.transform.position = new Vector3(Random.Range(0,tileCreater.row), 1,Random.Range(0,-tileCreater.column));
             fruitInMap = true;
         }
+    }
+    void Update()
+    {
+        SearchFood();
+        CreateFruit();
     }
 }

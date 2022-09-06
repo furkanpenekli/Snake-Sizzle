@@ -7,28 +7,27 @@ using UnityEngine.SceneManagement;
 
 public class GameOverMenu : MonoBehaviour
 {
-    public bool gameOver;
     public PauseMenu pauseMenu;
     public GameObject gameOverMenu;
 
+    private Snake[] _snakes;
+    
     private void Start()
     {
-        gameOver = false;
+        _snakes = FindObjectsOfType<Snake>();
     }
-
-    void Update()
+    private void Update()
     {
-        if (gameOver)
+        // 1.snake: dead
+        // 2.snake: alive
+        
+        foreach (var snake in _snakes)
         {
-            gameOverMenu.SetActive(true);
-            Time.timeScale = 0f;
-        }
-        else
-        {
-            gameOverMenu.SetActive(false);
-            if (pauseMenu.paused == false)
+            if (!snake.isAlive)
             {
-                Time.timeScale = 1f;   
+                gameOverMenu.SetActive(true);
+                Time.timeScale = 0f;
+                break;
             }
         }
     }

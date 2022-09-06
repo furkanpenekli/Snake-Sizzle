@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Fruit
   - Tail
+  - Snake
   layers:
   - Default
   - TransparentFX
